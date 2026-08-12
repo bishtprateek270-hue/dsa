@@ -1,41 +1,61 @@
-<h2><a href="https://leetcode.com/problems/two-sum">Two Sum</a></h2> <img src='https://img.shields.io/badge/Difficulty-Easy-brightgreen' alt='Difficulty: Easy' /><hr><p>You are given an array of integers <code>nums</code>&nbsp;and an integer <code>target</code>, return <em>indices of the two numbers such that they add up to <code>target</code></em>.</p>
+# 1. Two Sum
 
-<p>You may assume that each input would have <strong><em>exactly</em> one solution</strong>, and you may not use the <em>same</em> element twice.</p>
+[LeetCode Problem Link](https://leetcode.com/problems/two-sum) | **Difficulty:** Easy
 
-<p>You can return the answer in any order.</p>
+---
 
-<p>&nbsp;</p>
-<p><strong class="example">Example 1:</strong></p>
+## 📌 Pattern
+**Hash Map**
 
-<pre>
-<strong>Input:</strong> nums = [2,7,11,15], target = 9
-<strong>Output:</strong> [0,1]
-<strong>Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1].
-</pre>
+## 📝 Problem Statement
+Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
 
-<p><strong class="example">Example 2:</strong></p>
+You may assume that each input would have **exactly one solution**, and you may not use the same element twice. You can return the answer in any order.
 
-<pre>
-<strong>Input:</strong> nums = [3,2,4], target = 6
-<strong>Output:</strong> [1,2]
-</pre>
+---
 
-<p><strong class="example">Example 3:</strong></p>
+## 💡 Approach
 
-<pre>
-<strong>Input:</strong> nums = [3,3], target = 6
-<strong>Output:</strong> [0,1]
-</pre>
+For every number at index `i`:
 
-<p>&nbsp;</p>
-<p><strong>Constraints:</strong></p>
+1. Calculate the complement:
+   $$\text{needed} = \text{target} - \text{nums}[i]$$
+2. Use an `unordered_map<int, int>` to store numbers that have already been seen, mapping `number -> index`.
+3. Check if `needed` already exists in the map:
+   - If found, return `{map[needed], i}` as the result.
+   - If not found, store the current number and its index: `map[nums[i]] = i`.
 
-<ul>
-	<li><code>2 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>
-	<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>
-	<li><code>-10<sup>9</sup> &lt;= target &lt;= 10<sup>9</sup></code></li>
-	<li><strong>Only one valid answer exists.</strong></li>
-</ul>
+---
 
-<p>&nbsp;</p>
-<strong>Follow-up:&nbsp;</strong>Can you come up with an algorithm that is less than <code>O(n<sup>2</sup>)</code><font face="monospace">&nbsp;</font>time complexity?
+## 🔍 Step-by-Step Example
+
+```text
+nums = [2, 7, 11, 15]
+target = 9
+
+For i = 0 (nums[0] = 2):
+  needed = 9 - 2 = 7
+  7 is not seen yet -> Store map[2] = 0
+
+For i = 1 (nums[1] = 7):
+  needed = 9 - 7 = 2
+  2 exists in map at index 0!
+
+Answer = [0, 1]
+```
+
+---
+
+## ⚡ Complexity Analysis
+
+- **Time Complexity:** $\mathcal{O}(n)$ — We iterate through the array of size $n$ once. Searching and insertion in `unordered_map` takes $\mathcal{O}(1)$ average time.
+- **Space Complexity:** $\mathcal{O}(n)$ — In the worst case, we store up to $n$ elements in the hash map.
+
+---
+
+## 🔑 Key Learning
+Hash maps allow us to look up whether a required complement value has already appeared in $\mathcal{O}(1)$ average time complexity.
+
+## 🛠️ C++ Concept Used
+- `std::unordered_map<int, int>` for fast key-value lookups.
+- `mp.find(needed) != mp.end()` to check key existence in the map.
